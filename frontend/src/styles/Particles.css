@@ -1,0 +1,12 @@
+.particles-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+    background-color: black; 
+    color: #ffffff; 
+    overflow: hidden; /* Evita que se pueda desplazar fuera de los limites del layout */
+}
+

@@ -1,0 +1,73 @@
+.frase-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.frase-content {
+  position: fixed;
+  top: 0;
+  width: 102vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: arial;
+  font-weight: bolder;
+  user-select: none;
+  z-index: 0;
+}
+
+.frase-wrapper {
+  display: flex;
+}
+
+.frase-text {
+  font-size: 24px;
+  margin-right: 5px;
+}
+
+.frase-rotating {
+  text-align: center;
+  display: inline-block;
+  width: 205px;
+}
+
+/* Responsive - Tablets */
+@media (max-width: 768px) {
+  .frase-text {
+    font-size: 20px;
+  }
+
+  .frase-rotating {
+    width: 180px;
+  }
+}
+
+/* Responsive - iphone 14 pro max (430px) */
+@media (max-width: 430px) {
+  .frase-content {
+    height: 70vh;
+  }
+
+  .frase-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .frase-text {
+    font-size: 16px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .frase-rotating {
+    width: 150px;
+    margin: 0 auto;
+  }
+}
