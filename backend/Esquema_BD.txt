@@ -1,0 +1,55 @@
+Aqui será el esquema que seguirá mi BD Nosql hecha en MongoDb. EJEMPLOS DEL ESQUEMA:
+
+*Aclaración password_hash: Algoritmo bcrypt encripta la contraseña y la transforma a un texto aleatorio, al introducir la contraseña en el login tambien la encripta y la transforma, y solo compara ambos hashes para su acceso, es un metodo de seguridad
+
+*No guardamos mucha información de ubicación, por temas de seguridad al usuario. Solo guardamos lo importante de ubicacion
+
+*Hay que recalcar que algunos datos del esquema no se mostrarán directamente en el registro o login, apareceran en el momento indicado
+
+users: {
+    "_id": '.....',
+    "username": 'Ghosted98S',
+    "email": 'eare2991@gmail.com',
+    "email_verificado": true, -- Este campo es para la autenticación del email mas que nada en el login
+    "password_hash": 'textolargo...',
+    "estado": "activo", --Este campo es para el estado de la cuenta, si se encuentra suspendida o eliminada
+
+    "perfil":{
+        "nombre_completo": 'Eduardo Arévalo Sánchez',
+        "biografia": 'Aqui iria todo el choro',
+        "fecha_nacimiento": "ISODATE('2004-01-12')",
+        "foto_perfil": 'url.jpg',
+        "foto_portada": 'url.jpg',
+        "ubicacion": {
+            "pais": 'Mexico',
+            "estado": 'Veracruz',
+            "municipio": 'Veracruz',
+        },
+        "genero": 'String',
+    },
+
+    "intereses": ["interes1","interes2","interes3"], -- Array porque puede tener multiples temas de intereses
+
+    -- Posible parte con Neo4j
+    "relaciones": {
+        "seguidores_id": ["objet_id('..')", "objet_id('')"],
+        "siguiendo_id": ["objet_id('..')"]
+    },
+    -- Igualmente posible relaciones con Neo4j, post_count se quedaría 
+    estadisticas: { -- Llevar un conteo personal de cada post, seguidor y seguido de cada usuario
+        "seguidores_count": 2,
+        "siguiendo_count": 1,
+        "post_count": 0
+    }
+
+}
+
+Colecciones a agregar
+
+posts
+notificaciones
+conversaciones
+mensajes
+
+username Neo4j: neo4j
+password Neo4j: HuYdZgqnoovZgeFP0kCaKx-Lj3Uh-R-nXL25-zDsePs
