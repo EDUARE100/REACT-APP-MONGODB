@@ -1,0 +1,28 @@
+
+
+Razon principal por la que hice el proyecto en JavaScript fue más que nada porque es lo más moderno y lo que actualmente se utiliza en el entorno de la programación frontend, mientras que antes su usaba para el frontend javascript + html + css y para el backend php, python, Java o C#. Esto te obligaba a manejar diferentes lenguajes de programación. Al usar javascript te permite unificar y mantener la seguridad en un mismo entorno de programación usando para frontend frameworks como React usando jsx una extensión de JavaScript para React, asi como Css y html para las partes visuales y para el backend un motor como Node.js  y usando frameworks como Express.js para la creación y conexión de API's, y conexiones a bases de datos.
+
+Ejecutar ngrokdev para iniciar ngrok para servidor global. Este funcionará mienstras este funcionando en este dipositivo.Debido a configuraciones de entorno en el Nano .zrsch de mi sistema.
+Ejecutar npm run dev para iniciar la app de React. Ctrl + c para desactivar
+
+Tuve que poner flags y headers en el Nano de mi terminal para ngrok ya que tuve probelmas con el CORS (Cross-Origin Resource Sharing) que es basicamente un mecanismo de seguridad implementado por los navegadores web que restringé el acceso de una página web con dominio diferente al creado, basicamente forcé a ngrok que corriese en el puerto local para que otro navegador no tuviese problemas al intentar la solicitud
+
+Este proyecto se construye en 3 partes:
+
+*Framework: Es un esquema o marco de trabajo que ofrece una estructura base para elaborar un proyecto con objetivos específicos, una especie de plantilla que sirve como punto de partida para la organización y desarrollo de software.
+
+Definición framework fuentes: https://unirfp.unir.net/revista/ingenieria-y-tecnologia/framework
+
+Frontend: Se utiliza el framework de React, aunque bueno, React como tal no es un framework completo, vendria más a ser una libreria muy completa de JavaScript, la expresión vendría a ser una libreria que se usa como framework. Utilicé Vite como herramienta de compilación, se enfoca en velocidad y enfoque debido a algo llamado Hot Module Reload (HRM Update) que basicamente son actualizaciones del navegador al instanto sin necesidad de recargar la página, solo guardando los cambios del script, esta herramienta tiene multiples frameworks a instalar como React, Svelte, Preact, Vue, etc.
+
+*API: Las API (Application Programming Interface) son mecanismos que permiten a dos componentes de software comunicarse entre sí mediante un conjunto de definiciones y protocolos. 
+
+Definicion API's fuentes: https://aws.amazon.com/es/what-is/api
+
+Backend: En este apartado se implementara una herramienta llamada Node.js que es un motor potente de Javascript capaz de crear o conectar API's, es un entorno de ejecución que permite ejecutar Javascript fuera del navegador,es decir, en el lado del servidor,usé esta herramienta más que nada para unificar al mismo lenguaje que uso para el frontend, además porque viene integrado con la herramienta npm (node package manager) que gestiona paquetes al igual que lo que utiliza react porque npm es un gestor de paquetes para Javascript
+
+Base de datos: Para el llenado de datos que es la parte principal del proyecto. Usaré una biblioteca llamada Faker, es una biblioteca que crea registros falsos indicandole los campos que uno quiera, su creacion de datos es realista y sigue la coherencia de los datos gracias a la estructura que se le impone, estaba pensando en esta opcion en un principio aunque también pensé en JSONPlaceHolder que es un servicio de API's falsas o de testing, sin embargo puede no llegar a respetar la coherencia de los datos porque se planea que la inserción de datos sea moderada, minimo 500 registros, para esto se usará un script python y usando la inserción de datos gracias a la conexión y uso de pymongo como libreria de mongodb en python, asi usando los conocimientos adquiridos en la clase
+
+Este es el plan inicial, hasta ahora llevo lo que es todas las dependencias y librerias instaladas, asi como me encuentro haciendo pruebas sobre React y intentando poblar la base de datos en MongoDb con la libreria faker, si me da tiempo pienso meterle una segunda base de datos usando Neo4j que es una BD Nosql enfocada en grafos para mantener las relaciones mucho mejor.
+
+*Endpoint: Es cualquier dispositivo que se conecte a una red informática, como un smarthpone o servidor
