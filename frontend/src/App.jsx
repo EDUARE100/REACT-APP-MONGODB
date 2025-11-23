@@ -14,16 +14,14 @@ function App() {
 
   const handleLogin = () => {
     setShowContent(false);
-    setTimeout(() => {
-      setShowLogin(true);
-    }, 500);
+    setShowRegister(false);
+    setShowLogin(true);
   };
 
   const handleRegister = () => {
     setShowContent(false);
-    setTimeout(() => {
-        setShowRegister(true)
-    }, 500);
+    setShowLogin(false);
+    setShowRegister(true)
   };
 
   const handleRegisterSuccess = () => {
@@ -33,15 +31,12 @@ function App() {
     setShowLogin(true);
   };
 
+
   const handleback = () => {
     setShowLogin(false);
     setShowRegister(false);
 
-    setShowContent(false);
-
-    setTimeout(() => {
-      setShowContent(true);
-    }, 100);
+    setShowContent(true);
   }
 
 
@@ -83,7 +78,7 @@ function App() {
         {showLogin && (
           <>
           <DelayedParticles />
-          <LoginScreen />
+          <LoginScreen onRegisterclick={handleRegister}/>
           </>
         )}
         {showRegister && (

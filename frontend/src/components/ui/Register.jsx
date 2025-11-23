@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Eye, EyeOff, Info } from 'lucide-react';
-import '../../styles/LoginRegister.css';
+import '../../styles/Register.css';
 
 /**
  * Componente funcional que renderiza la pantalla de inicio de sesión.
@@ -69,19 +69,18 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
 
 
   return (
-    <div className="login-container">
-      {/* Tarjeta de Login */}
-      <div className="login-card">
-        <h1 className="title">Bienvenido</h1>
-        <p className="subtitle">Registrate!</p>
+    <div className="register-container">
+      <div className="register-card">
+        <h1 className="register-title">Bienvenido</h1>
+        <p className="register-subtitle">Registrate!</p>
 
-        <div className='form-group' style={{margin: "0px", marginBottom: '-10px'}}>
-            <label htmlFor="firstname" className='form-label'>
+        <div className='register-form-group'>
+            <label htmlFor="firstname" className='register-form-label'>
             </label>
             <input 
                 id="firstname"
                 type="text"
-                className="form-input"
+                className="register-form-input"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
                 placeholder="Firstname"
@@ -89,13 +88,13 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
             </input>
         </div>
 
-        <div className='form-group' style={{margin: "0px", marginBottom: '-10px'}}>
-            <label htmlFor="lastname" className='form-label'>
+        <div className='register-form-group'>
+            <label htmlFor="lastname" className='register-form-label'>
             </label>
             <input 
                 id="lastname"
                 type="text"
-                className="form-input"
+                className="register-form-input"
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
                 placeholder="Lastname"
@@ -103,13 +102,13 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
             </input>
         </div>
 
-        <div className='form-group' style={{margin: "0px", marginBottom: '-10px'}}>
-            <label htmlFor="email" className='form-label'>
+        <div className='register-form-group'>
+            <label htmlFor="email" className='register-form-label'>
             </label>
             <input 
                 id="email"
                 type="text"
-                className="form-input"
+                className="register-form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
@@ -117,13 +116,13 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
             </input>
         </div>
 
-        <div className="form-group" style={{margin: "0px", marginBottom: '-10px'}}>
-          <label htmlFor="username" className="form-label">
+        <div className="register-form-group">
+          <label htmlFor="username" className="register-form-label">
           </label>
           <input
             id="username"
             type="text"
-            className="form-input"
+            className="register-form-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Ingresa tu nombre de usuario"
@@ -131,20 +130,20 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
         </div>
 
         {/* Password Input */}
-        <div className="form-group" style={{margin: "0px", marginBottom: '-10px'}}>
-          <label htmlFor="password" className="form-label">
+        <div className="register-form-group">
+          <label htmlFor="password" className="register-form-label">
           </label>
           <div className="input-wrapper">
             <input
               id="password"
               type={showPassword ? "text" : "password"}
-              className="form-input"
+              className="register-form-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
             />
             <button
-              className="password-toggle"
+              className="register-password-toggle"
               type="button"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
@@ -158,20 +157,20 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
           </div>
         </div>
 
-        <div className="form-group" style={{margin: "0px", marginBottom: '-10px'}}>
-          <label htmlFor="confirmpassword" className="form-label">
+        <div className="register-form-group">
+          <label htmlFor="confirmpassword" className="register-form-label">
           </label>
           <div className="input-wrapper">
             <input
               id="confirmpassword"
               type={showconfirmPassword ? "text" : "password"}
-              className="form-input"
+              className="register-form-input"
               value={confirmpassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirma tu contraseña"
             />
             <button
-              className="password-toggle"
+              className="register-password-toggle"
               type="button"
               onClick={toggleConfirmPasswordVisibility}
               aria-label={showconfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
@@ -186,9 +185,9 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="button-group" style={{width: '70%', marginLeft: '4rem'}}>
+        <div className="register-button-group">
           <button
-            className="btn btn-primary"
+            className="register-btn register-btn-primary"
             onClick={handleCreateAccount}
           >
             Crear Cuenta
@@ -197,11 +196,11 @@ export const RegisterScreen = ({onSuccessRedirect}) => {
 
         {/* Mensaje de alerta */}
         {message && (
-          <div className="alert-area">
-            <div className={`alert-box ${message.isError ? 'alert-error' : 'alert-info'}`}>
+          <div className="register-alert-area">
+            <div className={`register-alert-box ${message.isError ? 'register-alert-error' : 'register-alert-info'}`}>
               <div>
-                <div className="alert-title">{message.title}</div>
-                <p className="alert-description">{message.description}</p>
+                <div className="register-alert-title">{message.title}</div>
+                <p className="register-alert-description">{message.description}</p>
               </div>
             </div>
           </div>

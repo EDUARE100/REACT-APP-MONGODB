@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import '../../styles/LoginRegister.css';
+import '../../styles/Login.css';
 
 /**
  * Componente funcional que renderiza la pantalla de inicio de sesión.
  * @returns {JSX.Element} El formulario de inicio de sesión.
  */
-export const LoginScreen = () => {
+export const LoginScreen = ({onRegisterclick}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -47,11 +47,9 @@ export const LoginScreen = () => {
   };
 
   const handleCreateAccount = () => {
-    setMessage({
-      title: "Placeholder de Registro",
-      description: "Esto te llevaría a un formulario de registro.",
-      isError: false,
-    });
+    if(onRegisterclick){
+      onRegisterclick();
+    }
   };
 
 
