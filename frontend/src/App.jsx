@@ -3,10 +3,14 @@ import FraseRotate from './components/ui/FraseRotate';
 import Header from './components/ui/Header';
 import { useState } from 'react';
 import { LoginScreen } from './components/ui/Login';
+import { RegisterScreen } from './components/ui/Register'
+
+//Funcion Callback para redirigir del registro al login después de crear cuenta
 
 function App() {
   const [showContent, setShowContent] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false)
 
   const handleLogin = () => {
     setShowContent(false);
@@ -18,11 +22,23 @@ function App() {
   const handleRegister = () => {
     setShowContent(false);
     setTimeout(() => {
+        setShowRegister(true)
     }, 500);
+  };
+
+  const handleRegisterSuccess = () => {
+    // 1. Apaga el estado de Registro
+    setShowRegister(false); 
+    // 2. Enciende el estado de Login
+    setShowLogin(true);
   };
 
   const handleback = () => {
     setShowLogin(false);
+    setShowRegister(false);
+
+    setShowContent(false);
+
     setTimeout(() => {
       setShowContent(true);
     }, 100);
@@ -38,9 +54,9 @@ function App() {
         onLoginClick={handleLogin}
         onRegisterClick={handleRegister}
         onBackClick={handleback}
-        showAuthButtons={!showLogin}  // ← IMPORTANTE: Esto controla qué botones mostrar
+        showAuthButtons={!showLogin && !showRegister}  // ← IMPORTANTE: Esto controla qué botones mostrar
       />
-        {!showLogin && (
+        {!showLogin && !showRegister && (
         <div style={{
           transform: showContent ? 'translateY(0)' : 'translateY(10px)',
           opacity: showContent ? 1 : 0,
@@ -51,8 +67,8 @@ function App() {
         </div>
         )}
 
-        {!showLogin && <DelayedParticles />}
-        {!showLogin && (
+        {!showLogin && !showRegister && <DelayedParticles />}
+        {!showLogin && !showRegister && (
         <footer style={{
           textAlign: 'center',
           bottom: 0,
@@ -68,6 +84,12 @@ function App() {
           <>
           <DelayedParticles />
           <LoginScreen />
+          </>
+        )}
+        {showRegister && (
+          <>
+          <DelayedParticles />
+          <RegisterScreen onSuccessRedirect={handleRegisterSuccess}/>
           </>
         )}
     </div>

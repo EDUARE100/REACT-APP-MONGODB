@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import '../../styles/Login.css';
+import '../../styles/LoginRegister.css';
 
 /**
  * Componente funcional que renderiza la pantalla de inicio de sesión.
