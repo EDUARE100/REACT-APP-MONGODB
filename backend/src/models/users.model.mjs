@@ -43,6 +43,11 @@ const userSchema = new Schema({
         nombre_completo: {type: String, default:''},
         biografia: {type:String, default:'', maxLength: 200},
         fecha_nacimiento: {type: Date, required: [true,'Fecha de nacimiento obligatoria']},
+        telefono: { 
+            type: String, 
+            trim: true, 
+            default: '' // Empieza vacío. El usuario lo llenará al "Editar Perfil"
+        },
         foto_perfil: {type: String, default:'url_perfil.jpg'},
         foto_portada: {type: String, default:'url_portada.jpg'},
         ubicacion: {
@@ -50,7 +55,7 @@ const userSchema = new Schema({
             estado: {type:String, default:''},
             municipio: {type:String, default:''}
         },
-        genero: {type: String, default:'Prefiero no decirlo'},
+        genero: {type: String, default:''},
     },
 
     intereses: [String], //Array de strings
@@ -80,8 +85,15 @@ userSchema.virtual('edad').get(function(){
     return edad
 })
 
+/**
+ Creacion de __V: 0 (Version Key). Es un control de recurrencia generado por moongose para mantener en concordancia los datos
+
+ osea si el mismo usuario está cambiando datos en dos partes distintas(dos dispotivos diferentes por ejemplo) al mismo tiempo, esta clave se encarga de mantener la seguridad de los datos, si uno hace cambios, el otro tendrá que refrescar las personas. 
+
+ */
 
 
-const User = mongoose.model('User',userSchema)
+
+const User = mongoose.model('User',userSchema, 'Users')
 
 export default User
