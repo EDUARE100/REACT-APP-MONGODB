@@ -46,17 +46,9 @@ function Header({ logoSrc, appName, onLoginClick, onRegisterClick, onBackClick, 
             thickness={1.5}
             onClick={handleLogin}
           >
-            Iniciar Sesión
+            Comenzar
           </StarBorder>
-          
-          <StarBorder
-            color="#0047AB"
-            speed="5s"
-            thickness={1.5}
-            onClick={handleRegister}
-          >
-            Registrarse
-          </StarBorder>
+  
           </>
           ):(
             <StarBorder

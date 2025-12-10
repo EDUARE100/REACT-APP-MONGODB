@@ -1,95 +1,91 @@
+import { useState } from 'react';
 import DelayedParticles from './components/ui/DelayedParticles';
 import FraseRotate from './components/ui/FraseRotate';
 import Header from './components/ui/Header';
-import { useState } from 'react';
-import { LoginScreen } from './components/ui/Login';
-import { RegisterScreen } from './components/ui/Register'
-
-//Funcion Callback para redirigir del registro al login después de crear cuenta
+import LoginScreen from './components/ui/Login'; 
 
 function App() {
-  const [showContent, setShowContent] = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false)
+  // Estado para controlar si mostramos el Home o el Login
+  const [showHome, setShowHome] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
 
-  const handleLogin = () => {
-    setShowContent(false);
-    setShowRegister(false);
-    setShowLogin(true);
+  // Función para abrir la pantalla de autenticación
+  const handleOpenAuth = () => {
+    setShowHome(false);
+    setShowAuth(true);
   };
 
-  const handleRegister = () => {
-    setShowContent(false);
-    setShowLogin(false);
-    setShowRegister(true)
+  // Función para volver al inicio (se la pasamos al LoginScreen)
+  const handleBack = () => {
+    setShowAuth(false);
+    setShowHome(true);
   };
 
-  const handleRegisterSuccess = () => {
-    // 1. Apaga el estado de Registro
-    setShowRegister(false); 
-    // 2. Enciende el estado de Login
-    setShowLogin(true);
+  // Función que se ejecuta cuando el usuario se loguea exitosamente
+  const handleLoginSuccess = (user, token) => {
+    console.log("Usuario:", user);
+    console.log("Token:", token);
+    alert(`¡Bienvenido ${user.nombre || user.email}!`);
+
   };
-
-
-  const handleback = () => {
-    setShowLogin(false);
-    setShowRegister(false);
-
-    setShowContent(true);
-  }
-
-
 
   return (
-    <div style={{minHeight: '150vh', position: 'relative'}}>
+  <div style={{ minHeight: '150vh', position: 'relative' }}>
+
+    {!showAuth && (
       <Header 
         logoSrc="/tron-logo-png-transparent.png"
         appName="NUBISH"
-        onLoginClick={handleLogin}
-        onRegisterClick={handleRegister}
-        onBackClick={handleback}
-        showAuthButtons={!showLogin && !showRegister}  // ← IMPORTANTE: Esto controla qué botones mostrar
+        onLoginClick={handleOpenAuth}     
+        onRegisterClick={handleOpenAuth}  
+        onBackClick={handleBack}
+        showAuthButtons={true} 
       />
-        {!showLogin && !showRegister && (
-        <div style={{
-          transform: showContent ? 'translateY(0)' : 'translateY(10px)',
-          opacity: showContent ? 1 : 0,
-          transition: 'transform 0.8s ease-out, opacity 0.8s ease-out',
-          pointerEvents: showContent ? 'auto' : 'none'
-        }}>
-          <FraseRotate />
-        </div>
-        )}
+    )}
 
-        {!showLogin && !showRegister && <DelayedParticles />}
-        {!showLogin && !showRegister && (
-        <footer style={{
-          textAlign: 'center',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          padding: '20px',
-          position: 'absolute',
-        }}>
-          ©2025 NUBISH.Todos los derechos reservados
-        </footer>
-        )}
-        {showLogin && (
-          <>
-          <DelayedParticles />
-          <LoginScreen onRegisterclick={handleRegister}/>
-          </>
-        )}
-        {showRegister && (
-          <>
-          <DelayedParticles />
-          <RegisterScreen onSuccessRedirect={handleRegisterSuccess}/>
-          </>
-        )}
-    </div>
-    
+
+    {!showAuth && (
+      <>
+
+        <div style={{
+           transform: showHome ? 'translateY(0)' : 'translateY(10px)',
+           opacity: showHome ? 1 : 0,
+           transition: 'transform 0.8s ease-out, opacity 0.8s ease-out',
+           pointerEvents: showHome ? 'auto' : 'none'
+         }}>
+           <FraseRotate />
+         </div>
+         
+         <DelayedParticles />
+
+         <footer style={{
+           textAlign: 'center',
+           bottom: 0,
+           left: 0,
+           width: '100%',
+           padding: '20px',
+           position: showHome ? 'absolute' : 'relative',
+           color: 'white'
+         }}>
+           ©2025 NUBISH. Todos los derechos reservados
+         </footer>
+      </>
+    )}
+
+    {showAuth && (
+      <>
+        <DelayedParticles />
+        
+        {/* Se quitó el botón de regresar del header y se le agregó un botón de regresar al card del login y register */}
+        <LoginScreen 
+          onBack={handleBack} 
+          onLoginSuccess={handleLoginSuccess} 
+        />
+      </>
+    )}
+
+  </div>
   );
 }
-export default App;
 
+export default App;
