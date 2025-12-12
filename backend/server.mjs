@@ -4,6 +4,10 @@
 
 //Estoy usando la extensión moderna de JavaScript osea mjs, enves de la CommonJS que necesitabas explicitamente usar los modulos COMMON usando require y module:export para import y exportar mientras que mjs hace de esa sintaxis más sencilla y se puede usar directamente import y export de las funciones o de diferentes archivos
 import User from "./src/models/users.model.mjs"
+import authRouter from './src/routes/auth.routes.mjs'
+import userRouter from './src/routes/user.routes.mjs'
+import postRouter from './src/routes/post.routes.mjs'
+
 // Importamos las librerias, esto será nuestra conexión osea NUESTRA API    
 import "dotenv/config" //Cargará la variable del url que contiene mi contraseña, y no será público en github, ya que en el .gitignore lo pusimos para que no fuese visible, para evitar robo de base de datos por medio de credenciales
 import express from 'express' //Herramienta (framework) para crear el servidor y manejar las peticiones web
@@ -21,7 +25,8 @@ app.use(cors({
     origin: [
         'http://localhost:5173', 
         'http://192.168.100.63:5173', // Tu celular accediendo al frontend
-        'http://192.168.100.63:3000'  // Peticiones directas
+        'http://192.168.100.63:3000',  // Peticiones directas
+        'http://172.20.10.2:5173'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -63,148 +68,18 @@ mongoose.connect(Mongodb_url) // Conexion hacia MongoDB, toma la url que escondi
 .then(() => {console.log("Conexion exitosa")}) //Validadciones si la conexion fue exitosa
 .catch((err) => {console.error("Conexion fallida: ",err.message)}) //Validacion si la conexion fue fallida e imprimimos el error
 
-//Implementaciones desde la propia documentación de Express
 
-//Necesitamos usar .get para confirmar que realmente el servidor se inició, .get es para OBTENER datos acerca de la direccion que se le pasó, sería como un pull de datos
-// req = request, forma de petición de express, mantiene toda la información sobre la petición que llega del cliente
-// res = response, forma de respuesta de express, envia toda la información sobre la respueesta de la petición del cliente al cliente devuelta
+/* Método POST: Metodo de solicitud HTTP que se usa para enviar datos al servidor para crear o actualizar un recurso*/
+
+app.use('/api/auth', authRouter);
+
+app.use('/api/users', userRouter);
+
+app.use('/api/posts', postRouter);
+
 app.get('/', (req,res) => {
     res.send('Hola mundo. Nubish Funcionando')
 })
-
-//Endpoint para agregar a un usuario. Temporalmente aqui en la conexion para probarlo con Postman
-
-// Le mandamos una direccion virtual que el servidor express ahora escucha para que React o Postman lo llamen por ese nombre, ya que se enviarán esos datos a esa dirección . Post es basicamente la función para inserción de datos
-// async, funcion que permite realizar otras tareas mientras se ejecutan antes otras, con esto me refiero a que no es sincrona osea que esta funcion no depende del terminar de un proceso para empezar otro se ocupa la variable await para crear intervalos de tiempo especificos de ejecución
-
-//Esta parte del codigo sería un INSERT CRUD.
-app.post('/api/auth/register', async(req, res) => {
-    const session = driver.session()
-    try {
-        console.log("Intento de registro:", req.body.email);
-
-        const { nombre,username, email, password, fecha_nacimiento } = req.body; 
-
-        // 1. Validar si ya existe en Mongo
-        const emailExistente = await User.findOne({ email: email });
-        if (emailExistente) {
-            return res.status(400).json({ status: 'error', message: "El correo ya está registrado" });
-        }
-        
-        if (!username) {
-            return res.status(400).json({ status: 'error', message: "El nombre de usuario es obligatorio" });
-        }
-        
-        // 3. Encriptar Pass
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // 4. Guardar en Mongo
-        const newUser = new User({
-            username: username,
-            email: email,
-            password_hash: hashedPassword, 
-            perfil: {
-                nombre_completo: nombre, 
-                fecha_nacimiento: fecha_nacimiento ? new Date(fecha_nacimiento) : new Date(), 
-            },
-            estado: "activo"
-        });
-
-        await newUser.save();
-        console.log("Usuario guardado en Mongo");
-
-        // 5. Guardar en Neo4j
-        await session.run(
-            'CREATE (u:Usuario {username: $username, email: $email, nombre: $nombre}) RETURN u',
-            { username: username, email: email, nombre: nombre }
-        )
-        console.log("Nodo creado en Neo4j");
-
-        res.json({ status: 'ok', message: "Usuario registrado exitosamente" });
-
-    } catch (error) {
-        console.error("Error en el registro:", error);
-        res.status(500).json({ status: 'error', message: error.message || "Error interno del servidor" });
-    } finally {
-        await session.close();
-    }
-})
-
-// --- LOGIN ---
-app.post('/api/auth/login', async (req, res) => {
-    try {
-        console.log("Intento de login:", req.body.email);
-        const { email, password } = req.body;
-
-        // 1. Buscar usuario
-        const user = await User.findOne({ email: email });
-        if (!user) {
-            return res.status(404).json({ status: 'error', message: "Usuario no encontrado" });
-        }
-
-        // 2. Comparar contraseñas
-        const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-        
-        if (!isPasswordValid) {
-            return res.status(401).json({ status: 'error', message: "Contraseña incorrecta" });
-        }
-
-        // 3. Generar Token
-        const token = jwt.sign(
-            { id: user._id, username: user.username, email: user.email },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
-
-        // 4. Responder con éxito
-        res.json({
-            status: 'ok',
-            message: "Login exitoso",
-            user: {
-                username: user.username,
-                nombre: user.perfil.nombre_completo,
-                email: user.email,
-                foto: user.perfil.foto_perfil
-            },
-            token: token
-        });
-
-    } catch (error) {
-        console.error("Error en login:", error);
-        res.status(500).json({ status: 'error', message: "Error interno" });
-    }
-});
-
-app.delete('/api/test/reset-db', async (req, res) => {
-    const session = driver.session();
-    try {
-        console.log("Iniciando purga de base de datos...");
-
-        // 1. Borrar todo en MongoDB
-        // deleteMany({}) sin filtros borra todos los documentos de la colección
-        await User.deleteMany({});
-        console.log("MongoDB: Todos los usuarios eliminados.");
-
-        // 2. Borrar todo en Neo4j
-        // MATCH (n) selecciona todos los nodos
-        // DETACH borra las relaciones primero (necesario para borrar nodos)
-        // DELETE n borra los nodos
-        await session.run('MATCH (n) DETACH DELETE n');
-        console.log("Neo4j: Todos los nodos y relaciones eliminados.");
-
-        res.json({ 
-            status: 'ok', 
-            message: "Bases de datos limpiadas correctamente. Puedes registrarte de nuevo." 
-        });
-
-    } catch (error) {
-        console.error("Error limpiando BD:", error);
-        res.status(500).json({ error: error.message });
-    } finally {
-        await session.close();
-    }
-});
 
 app.listen(port, '0.0.0.0',() => {
     console.log(`Servidor corriendo en http://localhost:${port}`)

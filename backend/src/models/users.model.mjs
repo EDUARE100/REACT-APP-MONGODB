@@ -48,20 +48,23 @@ const userSchema = new Schema({
             trim: true, 
             default: '' // Empieza vacío. El usuario lo llenará al "Editar Perfil"
         },
-        foto_perfil: {type: String, default:'url_perfil.jpg'},
-        foto_portada: {type: String, default:'url_portada.jpg'},
+        foto_perfil: {type: String, default:''},
+        foto_portada: {type: String, default:''},
         ubicacion: {
             pais: {type:String, default:''},
-            estado: {type:String, default:''},
+            ciudad: {type:String, default:''},
             municipio: {type:String, default:''}
         },
         genero: {type: String, default:''},
+
     },
 
     intereses: [String], //Array de strings
 
     contador: {
         post_count: {type: Number, default: 0},
+        seguidores_count: { type: Number, default: 0 },
+        siguiendo_count: { type: Number, default: 0 }, 
     },
 },
     {
@@ -74,8 +77,12 @@ const userSchema = new Schema({
 //Funcion para incorporarlo en la base de datos sin que aparezca como campo, se calcula al momento y te retorna el objeto gracias a la funcion toJSON: {virtuals:true} pero como tal no está en el esquema de la BD como campo estricto
 //Campo Calculado de edad
 userSchema.virtual('edad').get(function(){
+    if (!this.perfil || !this.perfil.fecha_nacimiento) {
+        return null; 
+    }
     const hoy = new Date() // Declaramos una variable con la fecha actual
     const nacimiento = this.perfil.fecha_nacimiento //Una variable con la fecha de dato insertado, extraido con la funcion this
+    if (isNaN(nacimiento.getTime())) return null;
     let edad = hoy.getFullYear() - nacimiento.getFullYear() //variable let ya que es susceptible a cambiar su valor, en donde resta el año actual menos el año de nacimiento, sacando el año de nacimiento
     const mes = hoy.getMonth() - nacimiento.getMonth()
     // La condición consta de si el mes de nacimiento es menor que 0 entonces le restamos 1 a la edad. Ejemplo, si se cumple en el mes de diciembre mes 12 pero estamos en el mes de nomviembre 11, el mes seria 11-12 lo que daría -1, osea aun faltaría un mes para que cumpla años por lo tanto se le resta un año, O si estamos en el mismo mes del cumpleaños pero hay dias de diferencia por eso el getDate de hoy y nacimiento osea que si el dia de hoy es menor que el dia del nacimiento se le resta un año tambien porque no ha llegado a su cumple aun
