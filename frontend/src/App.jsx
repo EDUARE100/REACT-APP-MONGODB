@@ -3,11 +3,18 @@ import DelayedParticles from './components/ui/DelayedParticles';
 import FraseRotate from './components/ui/FraseRotate';
 import Header from './components/ui/Header';
 import LoginScreen from './components/ui/Login'; 
+import Dashboard from './components/ui/Dashboard';
+
 
 function App() {
+
   // Estado para controlar si mostramos el Home o el Login
   const [showHome, setShowHome] = useState(true);
   const [showAuth, setShowAuth] = useState(false);
+  //Estado para controlar si el usuario se encuentra logueado
+  const [isloggedin, setisloggedin] = useState(false);
+  //Estado para guardar la información del usuario
+  const [currentuser, setcurrentuser] = useState(null);
 
   // Función para abrir la pantalla de autenticación
   const handleOpenAuth = () => {
@@ -21,13 +28,41 @@ function App() {
     setShowHome(true);
   };
 
+  const handleLogout = () => {
+    setisloggedin(false);     // Quitar el estado de logueado
+    setcurrentuser(null);     // Limpiar la información del usuario
+    setShowAuth(false);       // Asegurar que no esté en la vista Auth
+    setShowHome(true);        // Regresar a la pantalla de inicio
+  };
+
   // Función que se ejecuta cuando el usuario se loguea exitosamente
   const handleLoginSuccess = (user, token) => {
-    console.log("Usuario:", user);
     console.log("Token:", token);
-    alert(`¡Bienvenido ${user.nombre || user.email}!`);
-
+    
+    // Almacenar datos del usuario
+    setcurrentuser(user);
+    
+    // Cambiar la vista: Ocultar Home/Auth y mostrar Dashboard
+    setisloggedin(true);
+    setShowAuth(false);
+    setShowHome(false);
   };
+
+  const handleUserUpdate = (updatedUserData) => {
+        // Esto actualiza el estado de currentUser en App.js
+        setcurrentuser(updatedUserData); 
+    };
+
+  // Si el usuario está logueado, muestra el DASHBOARD
+  if (isloggedin) {
+    return (
+      <Dashboard 
+        user={currentuser} 
+        onLogout={handleLogout} 
+        onUserUpdate={handleUserUpdate}
+      />
+    );
+  }
 
   return (
   <div style={{ minHeight: '150vh', position: 'relative' }}>

@@ -1,0 +1,578 @@
+/* src/styles/SocialDashboard.css */
+
+/* Variables CSS para colores */
+:root {
+    --bg-primary: #000;
+    --bg-secondary: #2a2a2a;
+    --bg-tertiary: #3a3a3a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #b0b0b0;
+    --accent-blue: #007bff;
+    --border-color: #444;
+    --hover-color: #3d3d3d;
+}
+
+/* Contenedor principal del dashboard */
+.social-dashboard-container {
+    display: grid;
+    grid-template-columns: 80px 1fr 400px; /* Barra lateral izquierda, contenido principal, barra lateral derecha */
+    gap: 20px;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    padding: 20px;
+    box-sizing: border-box; /* Incluir padding en el tamaño */
+}
+
+/* --- Sidebar Izquierda --- */
+.sidebar-left {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-header {
+    margin-bottom: 30px;
+}
+
+.user-avatar-large {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-blue);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar el icono en la barra estrecha */
+    padding: 15px 0;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.nav-item span {
+    display: none; /* Ocultar texto en la barra lateral pequeña */
+}
+
+.nav-item svg {
+    margin-right: 0; /* No hay texto, no necesitamos margen */
+}
+
+.nav-item:hover {
+    background-color: var(--hover-color);
+    color: var(--text-primary);
+}
+
+.nav-item.active {
+    color: var(--accent-blue);
+    border-left-color: var(--accent-blue);
+    background-color: var(--hover-color);
+}
+
+/* --- Contenido Principal (Feed) --- */
+.main-content {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto; /* Permitir scroll en el feed */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Sección de Nuevo Post */
+.new-post-section {
+    background-color: var(--bg-tertiary);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+}
+
+.post-input-area {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.user-avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.post-input {
+    flex-grow: 1;
+    background-color: #222;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.post-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.post-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: var(--hover-color);
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Feed de Publicaciones */
+.posts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-card {
+    background-color: var(--bg-tertiary);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-content {
+    flex-grow: 1;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.author-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-right: 8px;
+}
+
+.author-handle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+.post-time {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.post-options {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.post-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.post-image {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    display: block; /* Para quitar espacio extra abajo de la imagen */
+}
+
+.post-footer {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+}
+
+.post-metric {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.post-metric svg {
+    margin-right: 5px;
+}
+
+/* --- Sidebar Derecha --- */
+.sidebar-right {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow-y: auto; /* Permitir scroll si hay mucho contenido */
+}
+
+.search-bar {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    width: 80%;
+    background-color: #222;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 10px 15px 10px 40px; /* Espacio para el icono */
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.suggestions-section h3,
+.trends-section h3 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.suggestion-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    background-color: var(--bg-tertiary);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.suggestion-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.suggestion-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestion-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.suggestion-handle {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.btn-follow {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-follow:hover {
+    background-color: #0056b3;
+}
+
+.trend-item {
+    display: block;
+    color: var(--accent-blue);
+    text-decoration: none;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.trend-item:hover {
+    color: #4da6ff;
+    text-decoration: underline;
+}
+
+.sidebar-right {
+  width: 350px;
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto; /* Permite scroll si la pantalla es muy bajita */
+}
+
+/* Ocultar en pantallas pequeñas (Tablet/Móvil) */
+@media (max-width: 1000px) {
+  .sidebar-right {
+    display: none;
+  }
+}
+
+/* --- 1. BARRA DE BÚSQUEDA --- */
+.search-bar {
+  background-color: #202327;
+  border-radius: 9999px; /* Forma de píldora */
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid transparent; /* Para el focus */
+  transition: all 0.2s ease;
+}
+
+.search-bar:focus-within {
+  background-color: black;
+  border-color: #1d9bf0; /* Azul Twitter */
+  box-shadow: 0 0 5px rgba(29, 155, 240, 0.4);
+}
+
+.search-icon {
+  color: #71767b;
+  margin-right: 12px;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  width: 100%;
+  font-size: 15px;
+}
+
+.search-input::placeholder {
+  color: #71767b;
+}
+
+/* CONTENEDOR DE SUGERENCIAS Y TENDENCIAS */
+.suggestions-section, 
+.trends-section {
+  background-color: #16181c; 
+  border-radius: 16px;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestions-section h3, 
+.trends-section h3 {
+  color: #e7e9ea;
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 15px 15px; /* Margen para el título */
+}
+
+/* --- 3. TARJETA DE USUARIO (SUGERENCIA) --- */
+.suggestion-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestion-card:hover {
+  background-color: #1d1f23;
+}
+
+.suggestion-info-clickable {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1; /* Ocupa el espacio sobrante */
+}
+
+.suggestion-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.suggestion-texts {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.suggestion-name {
+  color: #e7e9ea;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.suggestion-name:hover {
+  text-decoration: underline;
+}
+
+.suggestion-handle {
+  color: #71767b;
+  font-size: 13px;
+}
+
+/* --- 4. BOTÓN DE SEGUIR --- */
+.btn-follow {
+  background-color: #eff3f4; /* Blanco hueso */
+  color: #0f1419;
+  border: none;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 80px; /* Para que todos los botones midan parecido */
+}
+
+.btn-follow:hover {
+  background-color: #d7dbdc;
+}
+
+/* Estado: Siguiendo (Borde y fondo transparente) */
+.btn-follow:disabled,
+.btn-follow[disabled] {
+  background-color: transparent;
+  border: 1px solid #536471;
+  color: #eff3f4;
+  cursor: default;
+}
+
+/* --- 5. TENDENCIAS (Hashtags) --- */
+.trend-item {
+  display: block;
+  padding: 12px 16px;
+  color: #1d9bf0;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.trend-item:hover {
+  background-color: #1d1f23;
+}
+
+
+
+/* Para pantallas muy pequeñas, ajustar tamaños de fuente */
+@media (max-width: 768px) {
+    .mobile-nav-bar {
+        display: flex; /* Mostrar solo en móvil */
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 55px;
+        background-color: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        z-index: 100;
+        padding: 0;
+    }
+
+    .mobile-nav-bar .nav-item {
+        padding: 10px;
+    }
+
+    .mobile-nav-bar .nav-item span {
+        display: none; 
+    }
+
+    /* Ajuste para que el feed no quede tapado */
+    .social-dashboard-container {
+        padding-bottom: 55px; /* Altura de la barra inferior */
+    }
+}
+
+.mobile-nav-bar {
+    display: none; /* Ocultar en escritorio */
+}

@@ -3,6 +3,7 @@ import { User, Mail, Lock, Calendar, Eye, EyeOff, AtSign } from 'lucide-react';
 import '../../styles/Login.css'; //Importamos el diseño del Login
 
 // Conexion IP Local
+
 const BASE_API_URL = 'http://192.168.100.63:3000/api/auth'; 
 
 function LoginScreen({ onBack, onLoginSuccess }) { 
@@ -52,30 +53,41 @@ function LoginScreen({ onBack, onLoginSuccess }) {
                 body: JSON.stringify(bodyData),
             });
             //Lectura de datos dentro del cuerpo del mensaje, en este caso retorna user y token(contraseña encriptada).
-            const data = await response.json();
+            const responseData = await response.json(); 
 
-            if (!response.ok) {
-                throw new Error(data.message || 'Error en la solicitud');
-            }
+        if (response.ok) {
+            // El servidor respondió con éxito (status 200/201)
 
             if (isLogin) {
-                if (onLoginSuccess) {
-                    onLoginSuccess(data.user, data.token);
+                // Lógica de LOGIN Exitoso
+                if (responseData.token) {
+                    localStorage.setItem('token', responseData.token); 
+                    onLoginSuccess(responseData.user, responseData.token);
+                } else {
+                    // Caso de error: 200 OK, pero no hay token (error de backend)
+                    setError('Respuesta de login incompleta (falta token).');
                 }
             } else {
+                // Lógica de REGISTRO Exitoso (simplemente limpiamos y cambiamos de vista)
                 setError("Registro exitoso. Ahora inicia sesión."); 
                 setIsLogin(true);
-                // Limpiamos lo campos despues del registro
+                // Limpieza de campos
                 setPassword("");
                 setConfirmPassword("");
                 setName("");
                 setUsername("");
                 setFechaNacimiento("");
             }
+        } else {
+            // El servidor respondió con un error (400, 401, 500, etc.)
+            // responseData ya contiene el { message: '...' } del backend.
+            throw new Error(responseData.message || 'Error desconocido en el servidor.');
+        }
 
         } catch (err) {
-            console.error(err);
-            setError(err.message || "Error al conectar con el servidor");
+            // Captura errores de red (Failed to fetch) o errores lanzados arriba (400, 401, etc.)
+            console.error("Error capturado:", err);
+            setError(err.message || "Error al conectar con el servidor.");
         }
     };
 
@@ -165,7 +177,7 @@ function LoginScreen({ onBack, onLoginSuccess }) {
                     {/* Campo email */}
                     <div className="form-group">
                         <label className="form-label">
-                            {isLogin ? 'Nombre de Usuario o Email' : 'Correo Electrónico'}
+                            {isLogin ? 'Email' : 'Correo Electrónico'}
                         </label>
                         <div className="input-wrapper">
                             <Mail className="input-icon" />

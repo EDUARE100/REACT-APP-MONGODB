@@ -1,0 +1,304 @@
+/*
+ * Archivo de estilos específico para la pantalla de perfil (ProfileScreen.jsx)
+ * Asegúrate de que las variables de color (var(--bg-primary), etc.) estén definidas
+ * en un archivo global (como index.css) o en el propio Dashboard.css.
+ * * Basado en el esquema de color oscuro que hemos estado usando.
+ */
+
+/* Variables de color de ejemplo (Si no están definidas globalmente, inclúyelas aquí) */
+:root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-tertiary: #3a3a3a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #b0b0b0;
+    --accent-blue: #007bff;
+    --border-color: #444;
+}
+
+/* --- CONTENEDOR PRINCIPAL DEL PERFIL --- */
+
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--bg-primary); 
+    min-height: 100vh;
+    box-sizing: border-box;
+    animation: fadeIn 0.4s ease-out; /* Reutilizamos la animación de entrada */
+}
+
+/* Botón de Regresar */
+.btn-back-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 25px;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.btn-back-profile:hover {
+    color: var(--accent-blue);
+}
+
+/* --- TARJETA PRINCIPAL DEL PERFIL --- */
+.profile-card {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.profile-header-background {
+    height: 150px;
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Color de fondo de banner */
+    /* Si tienes una imagen de banner, usarías background-image: url(...) */
+}
+
+.profile-content {
+    padding: 0 30px 30px 30px;
+    margin-top: -80px; /* Sube la foto sobre el banner */
+}
+
+/* Foto de Perfil Grande */
+.profile-avatar-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--bg-secondary); /* Borde que coincide con el fondo del card */
+    box-shadow: 0 0 0 3px var(--accent-blue); /* Borde de énfasis */
+}
+
+/* --- Texto Principal --- */
+.profile-username {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-blue);
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.profile-name {
+    font-size: 1.2rem;
+    padding-top: 10px;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.profile-bio {
+    color: var(--text-secondary);
+    font-style: italic;
+    margin: 15px 0 25px 0;
+    line-height: 1.6;
+}
+
+/* --- Contadores (Siguiendo, Seguidores, Posts) --- */
+.profile-stats {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: -10px;
+}
+
+.stat-item {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.stat-item strong {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+/* --- Detalles y Contacto / Intereses --- */
+.profile-details-grid h3,
+.profile-interests h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    margin: 20px 0 px 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.detail-item span {
+    color: var(--text-secondary);
+}
+
+/* Intereses (Tags) */
+.interest-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.interest-tag {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+}
+
+.profile-actions-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -15px; /* Ajusta la posición sobre el card si es necesario */
+}
+
+/* Botón de Editar */
+.btn-edit-profile, .btn-save-profile {
+    background-color: var(--accent-blue);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+.btn-edit-profile:hover {
+    background-color: #0056b3;
+}
+
+/* Botón de Guardar */
+.btn-save-profile {
+    background-color: #28a745; /* Verde */
+}
+.btn-save-profile:hover {
+    background-color: #1e7e34;
+}
+.btn-save-profile:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Campos de Formulario */
+.profile-input {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 3px;
+}
+
+/* Inputs dentro de detail-item */
+.detail-item .profile-input {
+    width: auto; 
+    flex-grow: 1; /* Permite que el input crezca para llenar el espacio */
+}
+
+/* Estilos específicos para Bio e Intereses (textarea) */
+.profile-bio-input, .profile-interests-input {
+    min-height: 80px;
+    resize: vertical;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+    color: #dc3545; /* Rojo */
+    background-color: #3b2a2a;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 15px 0;
+    font-weight: 500;
+}
+
+/*Intereses CSS*/
+
+.interest-selection-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 0;
+}
+
+/* Estilo base para cada botón de interés */
+.interest-select-btn {
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    
+    /* Estilo por defecto (No seleccionado) */
+    background-color: var(--bg-tertiary); /* Gris oscuro */
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+/* Estilo para el botón seleccionado */
+.interest-select-btn.selected {
+    background-color: var(--accent-blue); /* Azul brillante */
+    color: white;
+    border-color: var(--accent-blue);
+    transform: scale(1.05);
+}
+
+/* Efecto hover */
+.interest-select-btn:hover:not(.selected) {
+    background-color: #4a4a4a; /* Un poco más claro al hacer hover */
+    color: var(--text-primary);
+}
+
+/* Animación de carga (spinner) */
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 10px;
+    }
+    .profile-content {
+        padding: 0 15px 15px 15px;
+    }
+    .profile-avatar-large {
+        width: 120px;
+        height: 120px;
+        margin-top: -60px;
+    }
+    .profile-username {
+        font-size: 1.5rem;
+    }
+    .profile-stats {
+        flex-wrap: wrap;
+    }
+}

@@ -1,0 +1,178 @@
+/* --- Contenedor Principal --- */
+.posts-history-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    max-width: 2000px;
+    margin: 0 auto; /* Centrado horizontalmente */
+    padding-bottom: 80px; /* Espacio extra abajo para que no choque con el footer */
+}
+
+/* --- Tarjeta del Post --- */
+.post-item-card {
+    background: #484c4d;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); /* Sombra suave inicial */
+    padding: 20px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid #f0f0f0;
+    position: relative;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Efecto al pasar el mouse por encima de la tarjeta */
+.post-item-card:hover {
+    transform: translateY(-4px); /* Se levanta un poco */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+    border-color: transparent;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Cabecera (Usuario y Fecha) --- */
+.post-header {
+    display: flex;
+    justify-content: space-between; /* Separa info del usuario del botón borrar */
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.post-user-info {
+    display: flex;
+    color: white;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar-medium {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eef2f5;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #ffff;
+    letter-spacing: 0.3px;
+}
+
+.post-date {
+    font-size: 0.85rem;
+    color: #95a5a6;
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+}
+
+/* --- Cuerpo del Post --- */
+.post-body {
+    margin-bottom: 15px;
+}
+
+.post-content-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: white;
+    white-space: pre-wrap; /* Respeta los saltos de línea */
+}
+
+/* Línea divisoria sutil */
+.post-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+    margin-bottom: 15px;
+}
+
+/* --- Footer (Botones de Like/Comentar) --- */
+.post-footer {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-interaction {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-interaction:hover {
+    background-color: #f7f9fa;
+    color: #3498db; /* Azul al pasar el mouse */
+}
+
+.btn-interaction svg {
+    transition: transform 0.2s ease;
+}
+
+.btn-interaction:active svg {
+    transform: scale(0.8); /* Efecto de "clic" */
+}
+
+/* --- Botón de Borrar (Estilo Especial) --- */
+.btn-icon-action.btn-delete {
+    background: transparent;
+    border: none;
+    color: #bdc3c7; /* Gris claro por defecto */
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-icon-action.btn-delete:hover {
+    background-color: #ffebee; /* Fondo rojo muy suave */
+    color: #e74c3c; /* Icono rojo intenso */
+    transform: rotate(15deg); /* Pequeña rotación divertida */
+}
+
+/* --- Mensajes de Estado (Carga, Error, Vacío) --- */
+.status-container {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+    background: #fdfdfd;
+    border-radius: 12px;
+    border: 1px dashed #dcdcdc;
+    margin-top: 20px;
+}
+
+.loader {
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid #3498db;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px auto;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
