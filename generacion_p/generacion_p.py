@@ -21,7 +21,7 @@ Lista_intereses = [
     "Animales", "Política", "Historia", "Anime", "Fitness"
 ]
 
-
+DEFAULT_IMG = "/user-icon-on-transparent-background-free.png"
 
 # Configuración del generador
 N_usuarios = 500
@@ -78,23 +78,22 @@ def seed_database():
         fakenum = fake.numerify('##########')
         telefono = f"+52 {fakenum}"
         
-        # Estructura para MongoDB (idéntica a tu Modelo)
+        # Estructura para MongoDB utilizando el esquema estructurado en users.model
         user_mongo = {
             "username": username,
             "email": email,
             "password_hash": password_hash,
             "email_verificado": True,
-            "rol": "usuario",
             "estado": "activo",
             "perfil": {
                 "nombre_completo": nombre_completo,
                 "biografia": fake.text(max_nb_chars=100),
                 "fecha_nacimiento": datetime.combine(fake.date_of_birth(minimum_age=18, maximum_age=60), datetime.min.time()),
                 "telefono": telefono,
-                "foto_perfil": "default_profile.png",
+                "foto_perfil": DEFAULT_IMG,
                 "ubicacion": {
                     "pais": "México",
-                    "estado": fake.state(),
+                    "municipio": fake.state(),
                     "ciudad": fake.city()
                 },
                 "genero": "Masculino" if sexo == 'M' else "Femenino"
@@ -105,10 +104,12 @@ def seed_database():
                 "seguidores_count": 0,
                 "siguiendo_count": 0
             },
-            "fecha_nacimiento": datetime.now(),
+            "fecha_registro": datetime.now(),
             "fecha_actualizacion": datetime.now(),
             "__v": 0
         }
+        
+        # __V: 0. Version Key. Basicamente es para evitar conflictos y llevar un control de versiones. Es para evitar actualización de datos simultaneamente. 
         
         usuarios_mongo.append(user_mongo)
         # Estructura para Neo4j (Solo datos clave)
@@ -121,6 +122,7 @@ def seed_database():
         print("MongoDB: Usuarios insertados.")
 
     # Insertar en Neo4j (Batch con UNWIND es mucho más rápido)
+    # Funcion unwind. Es una cláusula de Cypher que transforma una lista en una secuencia de ilas. Permitiendo procesar cada elemento individualemnte. Crucial para manejar una entrada muy grande de datos y realizar operaciones por lotes (grupos) 
     with neo4j_driver.session() as session:
         session.run("""
             UNWIND $users AS user
@@ -163,7 +165,7 @@ def seed_database():
             mongo_updates[usuario_origen]['siguiendo'] += 1
             mongo_updates[usuario_destino]['seguidores'] += 1
 
-    # Insertar Relaciones en Neo4j (Batch)
+    # Insertar Relaciones en Neo4j
     # Creamos lotes de 1000 para no saturar la memoria si son muchos
     batch_size = 1000
     for i in range(0, len(relaciones), batch_size):
@@ -179,11 +181,10 @@ def seed_database():
 
     print("Neo4j: Relaciones creadas.")
 
-    # --- PASO 3: Actualizar Contadores en MongoDB ---
+    # Actualizar Contadores en MongoDB
     print("Actualizando contadores en MongoDB...")
     
-    # Esto puede tardar un poco, se hace uno por uno o con bulk_write
-    # Para 500 es rápido hacerlo así:
+    #Actualizamos cada contador de cada usuario dependiendo de la conexión obtenida en Neo4j
     from pymongo import UpdateOne
     bulk_ops = []
     
