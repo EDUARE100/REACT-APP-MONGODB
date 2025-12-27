@@ -23,9 +23,7 @@ const app = express() // Creacion de la aplicacion de servidor, app es la variab
 const port = 3000 // Variable port que tendrá el servidor Node.js, creamos este puerto mas que nada porque no peude coexistir el mismo puerto para el frontend que es el 5173 en mi caso
 app.use(cors({
     origin: [
-        'http://localhost:5173', 
-        'http://192.168.100.63:5173', // Tu celular accediendo al frontend
-        'http://192.168.100.63:3000',  // Peticiones directas
+
         'http://172.20.10.2:5173'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

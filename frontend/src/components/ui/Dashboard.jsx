@@ -5,8 +5,8 @@ import NewPostForm from './createpost';
 import UserPostsHistory from './historial';
 import "../../styles/Dashboard.css"
 
-const protocol = window.location.protocol; // http: o https:
-const hostname = window.location.hostname; // localhost, 192.168.x.x, o 172.20.x.x
+const protocol = 'http:'; // http: o https:
+const hostname = 'localhost'; // localhost, 192.168.x.x, o 172.20.x.x
 const port = 3000; // El puerto de tu backend
 
 const BASE_URL = `${protocol}//${hostname}:${port}`;

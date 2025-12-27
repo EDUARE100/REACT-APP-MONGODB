@@ -4,7 +4,7 @@ import '../../styles/Login.css'; //Importamos el diseño del Login
 
 // Conexion IP Local
 
-const BASE_API_URL = 'http://192.168.100.63:3000/api/auth'; 
+const BASE_API_URL = 'http://172.20.10.2:3000/api/auth'; 
 
 function LoginScreen({ onBack, onLoginSuccess }) { 
     const [isLogin, setIsLogin] = useState(true);
