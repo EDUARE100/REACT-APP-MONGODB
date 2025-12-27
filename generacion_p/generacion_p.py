@@ -122,7 +122,7 @@ def seed_database():
         print("MongoDB: Usuarios insertados.")
 
     # Insertar en Neo4j (Batch con UNWIND es mucho más rápido)
-    # Funcion unwind. Es una cláusula de Cypher que transforma una lista en una secuencia de ilas. Permitiendo procesar cada elemento individualemnte. Crucial para manejar una entrada muy grande de datos y realizar operaciones por lotes (grupos) 
+    # Funcion unwind. Es una cláusula de Cypher que transforma una lista en una secuencia de filas. Permitiendo procesar cada elemento individualemnte. Crucial para manejar una entrada muy grande de datos y realizar operaciones por lotes (grupos) 
     with neo4j_driver.session() as session:
         session.run("""
             UNWIND $users AS user
